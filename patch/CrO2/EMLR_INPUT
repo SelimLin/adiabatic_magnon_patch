@@ -1,16 +1,15 @@
 &EMLR_PARA
-GVEC_READ   = 0 0 0
-ETA         = 0.010
-NLS = 30
-NITER = 2
-NMAX=2
-NITER_CORR=2
-LSBREAK = 1E-10
-LSDEPER = 1E-10
-NCH         = 80
+ETA         = 0.010      ! broadening parameter for DFPT calculation
+NLS = 30                 ! maximum number of iterations for solving sternheimer equation
+NITER = 2                ! maximum number of iterations for solving adiabatic equation of motion
+NMAX=2                   ! size of the expansion set is NMAX times the number of magnons
+NITER_CORR=2             ! maximum number of iterations for eigenvalue refinement
+LSBREAK = 1E-10          ! absolute criterion of wavefunction residual for solving sternheimer equation
+LSDEPER = 1E-10          ! relative criterion of wavefunction residual for solving sternheimer equation
+NCH         = 80         ! maximum number of iterations for self-consistent DFPT calculation.
 LCHUPD      = F T T F
-CHBREAK     = 1E-3
-RCHBREAK    = 1E-4
+CHBREAK     = 1E-3       ! absolute criterion of density residual for DFPT self-consistency
+RCHBREAK    = 1E-4       ! relative criterion of density residual for DFPT self-consistency
 IMIX        = 4
 AMIX        = 0.4
 BMIX        = 1.0
@@ -19,7 +18,7 @@ BMIX_MAG    = 1.0
 AMIN        = 0.1
 MAXMIX = -16
 MREMOVE = 5
-LDUMP=.TRUE.
+LDUMP=.TRUE.             ! writing all the output
 !LINCV=.TRUE.
 /
 
