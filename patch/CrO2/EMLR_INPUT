@@ -1,0 +1,28 @@
+&EMLR_PARA
+GVEC_READ   = 0 0 0
+ETA         = 0.010
+NLS = 30
+NITER = 2
+NMAX=2
+NITER_CORR=2
+LSBREAK = 1E-10
+LSDEPER = 1E-10
+NCH         = 80
+LCHUPD      = F T T F
+CHBREAK     = 1E-3
+RCHBREAK    = 1E-4
+IMIX        = 4
+AMIX        = 0.4
+BMIX        = 1.0
+AMIX_MAG    = 0.8
+BMIX_MAG    = 1.0
+AMIN        = 0.1
+MAXMIX = -16
+MREMOVE = 5
+LDUMP=.TRUE.
+!LINCV=.TRUE.
+/
+
+QVECLIST
+1 1         ! 2 q-point per line; total 1 line
+0 0 0.50

@@ -1,0 +1,99 @@
+# General parameters
+  SYSTEM   = CrO2      ! name of system, comment line
+  ISTART   = 1         ! 0:initialize the orbitals; read WAVECAR( bands and k-points), 1:redefine plane waves or 2:not redefine
+ # ICHARG   = 1         ! 0:from initial orbitals; 1:read CHGCAR; 2:atomic charge densities; +10 non-selfconsistent calculation
+# PREC     = Accurate  ! set accurate if very accurate forces are require; Normal
+  ENCUT    = 500       ! should be tested
+  EDIFF    = 1E-8      ! total energy and band structure energy change smaller than EDIFF; 1E-4
+  ISMEAR   = 0        ! semiconductors and insulators: -5 for energy, DOS and relax; avoid ISMEAR>0; 0 for band with SIGMA=0.05
+                       ! metals: -5 for energy and DOS; 1 for relax and band with SIGMA=0.2
+  SIGMA    = 0.05       ! entropy T*S < 1meV/atom; 0.2
+# NBANDS   = 24        ! NELECT/2+NIONS/2(non-sp); 0.6*NELECT+NMAG(sp); for large systems NIONS/4 and for transition metals 2*NIONS
+                       ! cheak: set ICHARG=12, an accuracy of 1e-6 should be obtained in 10~15 iterations
+# NELM     = 400       ! maximum electronic SC; if not converge within 40 steps, may not converge; reconsider IALGO, LDIAG and mixing-parameters; 60
+# NELMIN   = 4         ! minimum electronic SC; for ionic relax, set to a larger value(4 to 8); 2
+# NELMDL   =           ! # of non-SC steps, for initialize the orbitals randomly; positive:delay each ionic step; negative:delay first ionic step
+                       ! if ISTART=0, INIWAV=1, NELMDL=-5 for IALGO=8, NELMDL=-12 for IALGO=48 and NELMDL=0 for else
+# LORBIT   = 11        ! 10, 11 and 12 for PAW; 0
+
+# k-mesh
+# KSPACING = 0.8
+# KGAMMA = .TRUE.
+
+# Relax structure
+# ISIF     = 3         ! 2: ions; 3: ions, shape and volume; 4: ions and shape; 2
+# NSW      = 200       ! maximum # of ionic steps; 0
+# EDIFFG   = -1E-3     ! positive: total energy; negative: all forces; EDIFF*10
+IBRION   = 19         ! 2 for difficult relaxation; 1 for close to local minimum; 5,6 for phonon of finite differences; 7,8 for phonon of DFPT; -1
+# ADDGRID  =.TRUE.     ! improved accuracy of force;turn on for IBRION=1
+# POTIM    = 0.1       ! find an optimal POTIM using IBRION=2; 0.5
+# PSTRESS  = 100       ! specified external pressure
+
+# Density of states
+# EMIN     = -1
+# EMAX     = 2.5
+# NEDOS    = 351
+
+# spin polarization
+# ISPIN    = 2         ! 2 for spin polarized and 1 for non spin polarized; 1
+  MAGMOM   = 0 0 5 0 0 5 12*0   ! experimental*1.2 or 1.5; NIONS*1.0 or 3*NIONS*1.0
+  LNONCOLLINEAR =.TRUE.
+# LSPIRAL  = .TRUE. 
+# QSPIRAL  = 0.3825 0.6175 0.5         ! propagation vector of the spiral in direct coordinates of the  reciprocal lattice 
+# enini    = 450       ! set ENCUT high and enini lower (by about 100 eV)
+
+# Spin-orbit coupling  
+# LSORBIT  = .TRUE. 
+  ISYM     = -1        ! 2 for PAW; -1 or 0 switch off; 0 for SOC; -1 for spiral
+# SYMPREC  = 1E-5      ! 1E-5
+# SAXIS    = delta 0 1 ! default, not necessary to set manually
+  GGA_COMPAT = .FALSE. ! spherical cutoff on gradient field, set .FALSE. for all gradient corrected calculations, especial magnetic anisotropies; .TRUE.
+
+# LDA+U
+# LDAU     = .TRUE. 
+# LDAUTYPE = 2         ! 2: only the difference between U and J is important 
+# LDAUL    = 2 -1      ! -1=no on-site; 1=p, 2=d, 3=f; 2
+# LDAUU    = 3 0       ! on-site Coulomb interaction
+# LDAUJ    = 0 0       ! on-site Exchange interaction
+# LDAUPRINT= 2         ! verbosity of LDA+U
+ LMAXMIX  = 4         ! 4: d; 6: f; 2: p (default); If ICHARG=11 or 12 and LDA+U
+# LASPH    = .TRUE.    ! .TRUE. for non-spherical contributions; important for f, 3d, B-F atom with LDA+U, hybrid functionals or meta GGA; .FALSE.
+
+# vdW-DF functional
+# GGA      = MK
+# PARAM1   = 0.1234
+# PARAM2   = 1.0000
+# LUSE_VDW = .TRUE.
+# AGGAC    = 0.0000
+
+# DFT-D2
+# IVDW        = 1
+# VDW_RADIUS  = 50.0
+# VDW_SCALING = 0.75
+# VDW_D       =20.0
+
+# algorithms
+ #ALGO     = None     ! Normal for 38; Very_Fast for 48; Fast for mixture, without IALGO; Normal
+                      ! Eigenval for 3 to recalculate energy and DOS from WAVECAR; None or nothing for 2 to recalculate DOS from WAVECAR
+# IALGO               ! set algorithms via ALGO; all algorithms will result in the same result;
+                      ! 38:if problems are encountered, decrease NSIM;
+                      ! 48:much faster than 38, at least for large systems; switch with LREAL=Auto; if have problem, try 38;
+                      ! when 48 fail: set WEIMIN=0 for relax; for initialization problem, increase NBANDS or set ALGO=Fast or set ENINI
+# LREAL    = Auto     ! Auto for mixed atomic specie and large system(more than 20 atoms); .FALSE. for accurate forces; .FALSE.
+# NSIM     = 4        ! blocked algorithm update, NSIM bands at a time; 4
+
+# number of grid-points in the FFT-mesh
+# NGX      = 72
+# NGY      = 58
+# NGZ      = 38 
+
+# Parallelisation
+  LPLANE   = .TRUE.
+  NPAR     = 8        ! square of number of cores
+# KPAR     = 4
+# NCORE    = 12       ! number of cores per compute node
+  LSCALU   = .FALSE.
+
+# Write WAVECAR or CHGCAR
+  LWAVE    = .FALSE.  ! set .FALSE. to be default; .TRUE.
+  #LCHARG   = .FALSE.  ! .FALSE. for relax and .TRUE. for other cases; .TRUE.
